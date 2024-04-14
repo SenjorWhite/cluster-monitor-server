@@ -1,6 +1,5 @@
 import { test } from '@japa/runner'
 import ClusterService from '#services/cluster_service'
-import Cluster from '#models/cluster'
 import testUtils from '@adonisjs/core/services/test_utils'
 
 test.group('ClusterService', (group) => {
