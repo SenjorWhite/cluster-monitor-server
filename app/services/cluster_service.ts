@@ -1,4 +1,5 @@
 import Cluster from '#models/cluster'
+import Iops from '#models/iops'
 import { DateTime } from 'luxon'
 
 interface ClusterData {
@@ -45,12 +46,34 @@ class ClusterService {
 
   // TODO
   async getClusterReadIops(clusterId: number): Promise<IopsData[]> {
-    return []
+    const readIops = await Iops.query()
+      .where('clusterId', clusterId)
+      .andWhere('isRead', true)
+      .orderBy('hour', 'asc')
+
+    return readIops.map((data) => {
+      return {
+        id: data.id,
+        value: data.value,
+        hour: data.hour,
+      }
+    })
   }
 
   // TODO
   async getClusterWriteIops(clusterId: number): Promise<IopsData[]> {
-    return []
+    const writeIops = await Iops.query()
+      .where('clusterId', clusterId)
+      .andWhere('isWrite', true)
+      .orderBy('hour', 'asc')
+
+    return writeIops.map((data) => {
+      return {
+        id: data.id,
+        value: data.value,
+        hour: data.hour,
+      }
+    })
   }
 }
 
