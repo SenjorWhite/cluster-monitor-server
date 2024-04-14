@@ -1,6 +1,11 @@
+import testUtils from '@adonisjs/core/services/test_utils'
 import { test } from '@japa/runner'
 
-test.group('cluster', () => {
+test.group('cluster', (group) => {
+  group.setup(async () => {
+    await testUtils.db().seed()
+  })
+
   test('Should get a list of clusters', async ({ client }) => {
     const response = await client.get('/clusters')
 
@@ -9,7 +14,18 @@ test.group('cluster', () => {
       data: [
         {
           id: 1,
-          name: 'cluster01',
+          name: 'Cluster A',
+          timezone: 'America/New_York',
+        },
+        {
+          id: 2,
+          name: 'Cluster B',
+          timezone: 'Europe/London',
+        },
+        {
+          id: 3,
+          name: 'Cluster C',
+          timezone: 'Asia/Tokyo',
         },
       ],
     })

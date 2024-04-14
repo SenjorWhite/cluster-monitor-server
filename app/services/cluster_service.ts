@@ -1,19 +1,12 @@
 import Cluster from '#models/cluster'
 
 interface ClusterData {
-  id: string
+  id: number
   name: string
+  timezone: string
 }
 
 class ClusterService {
-  private clusters: ClusterData[] = []
-
-  constructor() {
-    this.clusters = []
-  }
-
-  private readJsonFile() {}
-
   async addCluster(name?: string): Promise<Cluster> {
     const cluster = new Cluster()
     cluster.name = name || 'default cluster'
@@ -27,8 +20,20 @@ class ClusterService {
     return await cluster.save()
   }
 
-  async getAllClusters(): Promise<Cluster[]> {
-    return await Cluster.all()
+  async getClusterById(id: number): Promise<Cluster> {
+    const cluster = await Cluster.findOrFail(id)
+    return cluster
+  }
+
+  async getClusterList(): Promise<ClusterData[]> {
+    const clusters = await Cluster.query().orderBy('id', 'asc')
+    return clusters.map((cluster) => {
+      return {
+        id: cluster.id,
+        name: cluster.name,
+        timezone: cluster.timezone,
+      }
+    })
   }
 }
 
