@@ -1,3 +1,4 @@
+import ClusterService from '#services/cluster_service'
 import testUtils from '@adonisjs/core/services/test_utils'
 import { test } from '@japa/runner'
 
@@ -5,6 +6,8 @@ test.group('cluster', (group) => {
   group.setup(async () => {
     await testUtils.db().seed()
   })
+
+  const clusterService = new ClusterService()
 
   test('Should return the specific cluster with correct data', async ({ client }) => {
     const response = await client.get('/clusters/1')
@@ -46,5 +49,23 @@ test.group('cluster', (group) => {
         },
       ],
     })
+  })
+
+  test('Should get correct iops/read records from the targeted cluster', async ({ client }) => {
+    const expectedData = clusterService.getClusterReadIops(1)
+
+    const response = await client.get('/clusters/1/iops/read')
+
+    response.assertStatus(200)
+    response.assertBody({ data: expectedData })
+  })
+
+  test('Should get correct iops/write records from the targeted cluster', async ({ client }) => {
+    const expectedData = clusterService.getClusterWriteIops(1)
+
+    const response = await client.get('/clusters/1/iops/read')
+
+    response.assertStatus(200)
+    response.assertBody({ data: expectedData })
   })
 })
