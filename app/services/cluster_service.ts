@@ -1,9 +1,16 @@
 import Cluster from '#models/cluster'
+import { DateTime } from 'luxon'
 
 interface ClusterData {
   id: number
   name: string
   timezone: string
+}
+
+interface IopsData {
+  id: number
+  value: number
+  hour: DateTime
 }
 
 class ClusterService {
@@ -34,6 +41,16 @@ class ClusterService {
         timezone: cluster.timezone,
       }
     })
+  }
+
+  // TODO
+  async getClusterReadIops(): Promise<IopsData[]> {
+    return []
+  }
+
+  // TODO
+  async getClusterWriteIops(): Promise<IopsData[]> {
+    return []
   }
 }
 

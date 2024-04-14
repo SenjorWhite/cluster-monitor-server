@@ -11,7 +11,10 @@ export default class ClustersController {
 
   async show({ params, response }: HttpContext) {
     const cluster = await this.clusterService.getClusterById(params.id)
-    const iopsUrl = `/clusters/${params.id}/iops`
+    const iopsUrl = {
+      read: `/clusters/${params.id}/iops/read`,
+      write: `/clusters/${params.id}/iops/write`,
+    }
     const configsUrl = `/clusters/${params.id}/configs`
 
     return response.json({ data: cluster, links: { iops: iopsUrl, configs: configsUrl } })
