@@ -17,8 +17,8 @@ test.group('cluster', (group) => {
         timezone: 'America/New_York',
       },
       links: {
-        iops: 'clusters/1/iops',
-        configs: 'cluster/1/configs',
+        iops: '/clusters/1/iops',
+        configs: '/clusters/1/configs',
       },
     })
   })
