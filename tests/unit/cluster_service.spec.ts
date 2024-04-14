@@ -1,6 +1,7 @@
 import { test } from '@japa/runner'
 import ClusterService from '#services/cluster_service'
 import testUtils from '@adonisjs/core/services/test_utils'
+import Iops from '#models/iops'
 
 test.group('ClusterService', (group) => {
   group.setup(async () => {
@@ -47,5 +48,41 @@ test.group('ClusterService', (group) => {
     const actualCluster = await clusterService.getClusterById(latestClusterId)
 
     assert.deepEqual(actualCluster.timezone, 'mock-timezone')
+  })
+
+  test('Should get the iops/read data of the specific cluster', async ({ assert }) => {
+    const readIops = await clusterService.getClusterReadIops(1)
+    const actualData = await Iops.query()
+      .where('clusterId', 1)
+      .andWhere('isRead', true)
+      .orderBy('hour', 'asc')
+
+    const expectedData = actualData.map((data) => {
+      return {
+        id: data.id,
+        value: data.value,
+        hour: data.hour,
+      }
+    })
+
+    assert.deepEqual(readIops, expectedData)
+  })
+
+  test('Should get the iops/write data of the specific cluster', async ({ assert }) => {
+    const readIops = await clusterService.getClusterWriteIops(1)
+    const actualData = await Iops.query()
+      .where('clusterId', 1)
+      .andWhere('isWrite', true)
+      .orderBy('hour', 'asc')
+
+    const expectedData = actualData.map((data) => {
+      return {
+        id: data.id,
+        value: data.value,
+        hour: data.hour,
+      }
+    })
+
+    assert.deepEqual(readIops, expectedData)
   })
 })

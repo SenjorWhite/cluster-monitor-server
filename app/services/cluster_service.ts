@@ -44,12 +44,12 @@ class ClusterService {
   }
 
   // TODO
-  async getClusterReadIops(): Promise<IopsData[]> {
+  async getClusterReadIops(clusterId: number): Promise<IopsData[]> {
     return []
   }
 
   // TODO
-  async getClusterWriteIops(): Promise<IopsData[]> {
+  async getClusterWriteIops(clusterId: number): Promise<IopsData[]> {
     return []
   }
 }

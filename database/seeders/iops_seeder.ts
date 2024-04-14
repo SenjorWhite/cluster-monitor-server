@@ -19,27 +19,39 @@ function generateMockRecords(startEpochTime: number) {
   for (let i = 0; i < oneWeekInHours; i++) {
     const currentTime = startTime.plus({ hours: i })
 
-    // TODO: extract?
-    let randomValue
-    if (Math.random() < 0.8) {
-      // 80% to generate lower value
-      randomValue = Math.floor(Math.random() * 10000)
-    } else {
-      // 20% to generate higher value
-      randomValue = Math.floor(Math.random() * 100000)
-    }
-
-    const record = {
-      id: i + 1,
+    const readRecord = {
       clusterId: 1,
-      value: randomValue,
+      value: getRandomIopsValue(),
       isWrite: false,
       isRead: true,
       hour: currentTime,
     }
 
-    records.push(record)
+    records.push(readRecord)
+
+    const writeRecord = {
+      clusterId: 1,
+      value: getRandomIopsValue(),
+      isWrite: true,
+      isRead: false,
+      hour: currentTime,
+    }
+
+    records.push(writeRecord)
   }
 
   return records
+}
+
+function getRandomIopsValue(threshold: number = 0.8): number {
+  let randomValue
+  if (Math.random() < threshold) {
+    // (default) 80% to generate lower value
+    randomValue = Math.floor(Math.random() * 10000)
+  } else {
+    // (default) 20% to generate higher value
+    randomValue = Math.floor(Math.random() * 100000)
+  }
+
+  return randomValue
 }
