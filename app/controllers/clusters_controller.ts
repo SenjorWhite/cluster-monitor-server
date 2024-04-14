@@ -1,9 +1,17 @@
 import ClusterService from '#services/cluster_service'
+import { inject } from '@adonisjs/core'
 import type { HttpContext } from '@adonisjs/core/http'
 
 export default class ClustersController {
+  // TODO: use inject instead
+  private clusterService = new ClusterService()
+
   async index({ response }: HttpContext) {
-    const clusterService = new ClusterService()
-    return response.json({ data: await clusterService.getClusterList() })
+    return response.json({ data: await this.clusterService.getClusterList() })
+  }
+
+  async show({ params, response }: HttpContext) {
+    const cluster = await this.clusterService.getClusterById(params.id)
+    return response.json({ data: cluster })
   }
 }

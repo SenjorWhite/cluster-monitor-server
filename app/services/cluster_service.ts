@@ -20,9 +20,9 @@ class ClusterService {
     return await cluster.save()
   }
 
-  async getClusterById(id: number): Promise<Cluster> {
+  async getClusterById(id: number): Promise<ClusterData> {
     const cluster = await Cluster.findOrFail(id)
-    return cluster
+    return { id: cluster.id, name: cluster.name, timezone: cluster.timezone }
   }
 
   async getClusterList(): Promise<ClusterData[]> {
