@@ -6,6 +6,19 @@ test.group('cluster', (group) => {
     await testUtils.db().seed()
   })
 
+  test('Should return the specific cluster with correct data', async ({ client }) => {
+    const response = await client.get('/clusters/1')
+
+    response.assertStatus(200)
+    response.assertBody({
+      data: {
+        id: 1,
+        name: 'Cluster A',
+        timezone: 'America/New_York',
+      },
+    })
+  })
+
   test('Should get a list of clusters', async ({ client }) => {
     const response = await client.get('/clusters')
 
