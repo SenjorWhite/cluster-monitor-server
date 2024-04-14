@@ -1,7 +1,7 @@
 import { test } from '@japa/runner'
 
 test.group('cluster', () => {
-  test('get a list of clusters', async ({ client }) => {
+  test('Should get a list of clusters', async ({ client }) => {
     const response = await client.get('/clusters')
 
     response.assertStatus(200)
