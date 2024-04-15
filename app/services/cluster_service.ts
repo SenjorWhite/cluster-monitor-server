@@ -11,7 +11,7 @@ interface ClusterData {
 interface IopsData {
   id: number
   value: number
-  hour: DateTime
+  hour: number
 }
 
 class ClusterService {
@@ -44,7 +44,7 @@ class ClusterService {
     })
   }
 
-  // TODO
+  // TODO: Combine two functions with flags?
   async getClusterReadIops(clusterId: number): Promise<IopsData[]> {
     const readIops = await Iops.query()
       .where('clusterId', clusterId)
@@ -55,12 +55,12 @@ class ClusterService {
       return {
         id: data.id,
         value: data.value,
-        hour: data.hour,
+        hour: data.hour.toSeconds(),
       }
     })
   }
 
-  // TODO
+  // TODO: Combine two functions with flags?
   async getClusterWriteIops(clusterId: number): Promise<IopsData[]> {
     const writeIops = await Iops.query()
       .where('clusterId', clusterId)
@@ -71,7 +71,7 @@ class ClusterService {
       return {
         id: data.id,
         value: data.value,
-        hour: data.hour,
+        hour: data.hour.toSeconds(),
       }
     })
   }

@@ -61,7 +61,7 @@ test.group('ClusterService', (group) => {
       return {
         id: data.id,
         value: data.value,
-        hour: data.hour,
+        hour: data.hour.toSeconds(),
       }
     })
 
@@ -79,7 +79,7 @@ test.group('ClusterService', (group) => {
       return {
         id: data.id,
         value: data.value,
-        hour: data.hour,
+        hour: data.hour.toSeconds(),
       }
     })
 

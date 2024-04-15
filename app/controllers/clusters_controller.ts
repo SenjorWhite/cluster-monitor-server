@@ -19,4 +19,18 @@ export default class ClustersController {
 
     return response.json({ data: cluster, links: { iops: iopsUrl, configs: configsUrl } })
   }
+
+  async getClusterReadIops({ params, response }: HttpContext) {
+    const clusterId = params.id
+    const readIopsData = await this.clusterService.getClusterReadIops(clusterId)
+
+    return response.json({ data: readIopsData })
+  }
+
+  async getClusterWriteIops({ params, response }: HttpContext) {
+    const clusterId = params.id
+    const writeIopsData = await this.clusterService.getClusterWriteIops(clusterId)
+
+    return response.json({ data: writeIopsData })
+  }
 }

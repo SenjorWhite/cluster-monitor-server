@@ -52,7 +52,7 @@ test.group('cluster', (group) => {
   })
 
   test('Should get correct iops/read records from the targeted cluster', async ({ client }) => {
-    const expectedData = clusterService.getClusterReadIops(1)
+    const expectedData = await clusterService.getClusterReadIops(1)
 
     const response = await client.get('/clusters/1/iops/read')
 
@@ -61,9 +61,9 @@ test.group('cluster', (group) => {
   })
 
   test('Should get correct iops/write records from the targeted cluster', async ({ client }) => {
-    const expectedData = clusterService.getClusterWriteIops(1)
+    const expectedData = await clusterService.getClusterWriteIops(1)
 
-    const response = await client.get('/clusters/1/iops/read')
+    const response = await client.get('/clusters/1/iops/write')
 
     response.assertStatus(200)
     response.assertBody({ data: expectedData })
