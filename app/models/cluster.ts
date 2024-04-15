@@ -5,6 +5,8 @@ export default class Cluster extends BaseModel {
   @column({ isPrimary: true })
   declare id: number
 
+  // TODO: assign an uuid to cluster model
+
   @column()
   declare name: string
 
